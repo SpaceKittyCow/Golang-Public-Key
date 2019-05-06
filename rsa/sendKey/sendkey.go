@@ -12,19 +12,17 @@ import (
 	"net/http"
 )
 
+       var salt = []byte("gocows")
+
 func main() {
-	salt := []byte("gocows")
 
 	respByte, err := ioutil.ReadFile("../key")
 	if err != nil {
 		fmt.Printf("%s", err)
 		return
 	}
-	block, err := pem.Decode([]byte(respByte))
-	if err != nil {
-		fmt.Printf("%s", err)
-		return
-	}
+	block, _ := pem.Decode([]byte(respByte))
+
 	rsaPublicKey, err := x509.ParsePKIXPublicKey(block.Bytes)
 	if err != nil {
 		fmt.Printf("%s", err)
@@ -42,8 +40,11 @@ func main() {
 		return
 	}
 
-	//testDecryption()
-	_, err = http.Post("http://127.0.0.1:8080/", "raw", buf)
+	//testDecryption(fmt.Sprintf("%s", ciphertext))
+
+        var buf bytes.Buffer
+	buf.Write(ciphertext)
+	_, err = http.Post("http://127.0.0.1:8080/", "raw", &buf)
 
 	if err != nil {
 		fmt.Printf("%s", err)
@@ -56,19 +57,14 @@ func main() {
 
 }
 
-func testDecryption() {
-	respByte, err = ioutil.ReadFile("../pkey")
+func testDecryption(ciphertext string) {
+	respByte, err := ioutil.ReadFile("../pkey")
 	if err != nil {
 		fmt.Printf("%s", err)
 		return
 	}
 
-	blocked, err := pem.Decode([]byte(respByte))
-	if err != nil {
-		fmt.Printf("%s", err)
-		return
-	}
-
+	blocked, _ := pem.Decode([]byte(respByte))
 
 	rsaPrivateKey, err := x509.ParsePKCS1PrivateKey(blocked.Bytes)
 	if err != nil {

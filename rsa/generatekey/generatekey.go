@@ -67,14 +67,14 @@ func main() {
 	http.ListenAndServe(":8080", nil)
 }
 
-func CreatePrivateKey(*rsa.PrivateKey privateKey){
+func CreatePrivateKey(privateKey *rsa.PrivateKey){
 
 	block := &pem.Block{
 		Type:  "RSA PRIVATE KEY",
 		Bytes: x509.MarshalPKCS1PrivateKey(privateKey),
 	}
 
-	file, err = os.Create("../pkey")
+	file, err := os.Create("../pkey")
 	if err != nil {
 		fmt.Printf("%s", err)
 		return
