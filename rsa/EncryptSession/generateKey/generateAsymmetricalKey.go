@@ -40,7 +40,7 @@ func main() {
 		fmt.Printf("%s", err)
 	}
 	//createPrivateKey(privateKey)
-	fmt.Print("Key/s Set, starting Server")
+	fmt.Print("Public Key Set, starting Server \n")
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == http.MethodPost {
 			body, err := ioutil.ReadAll(r.Body)
@@ -58,7 +58,7 @@ func main() {
 				return
 			}
 
-			fmt.Printf("%s", plaintext)
+			fmt.Printf("%v \n", []rune(string(plaintext)))
 			return
 		} else {
 			fmt.Print("Please send POST")
@@ -67,7 +67,7 @@ func main() {
 	http.ListenAndServe(":8080", nil)
 }
 
-func CreatePrivateKey(privateKey *rsa.PrivateKey){
+func createPrivateKey(privateKey *rsa.PrivateKey){
 
 	block := &pem.Block{
 		Type:  "RSA PRIVATE KEY",
@@ -85,6 +85,7 @@ func CreatePrivateKey(privateKey *rsa.PrivateKey){
 		fmt.Printf("%s", err)
 		return
 	}
+	fmt.Print("PrivateKeySet")
 	return
 }
 

@@ -29,10 +29,18 @@ func main() {
 		return
 	}
 
+	hash := sha256.New()
+	hash.Size()
+	//OEAP Session Key cannot be > keyByteSize - (hashSize *2) - 2
+	sessionKey := make([]byte, (rsaPublicKey.(*rsa.PublicKey).Size()-(hash.Size()*2)-3))
+	//populates Session with random data
+	rand.Read(sessionKey)
+
+	fmt.Printf("%v \n", []rune(string(sessionKey)))
 	ciphertext, err := rsa.EncryptOAEP(sha256.New(),
 		rand.Reader,
 		rsaPublicKey.(*rsa.PublicKey),
-		[]byte("I like cows more than gophers"), //message
+		sessionKey,
 		salt)
 
 	if err != nil {
@@ -40,7 +48,7 @@ func main() {
 		return
 	}
 
-	//testDecryption(fmt.Sprintf("%s", ciphertext))
+	//confirmCorrectDecryption(fmt.Sprintf("%s", ciphertext))
 
         var buf bytes.Buffer
 	buf.Write(ciphertext)
@@ -57,7 +65,7 @@ func main() {
 
 }
 
-func testDecryption(ciphertext string) {
+func confirmCorrectDecryption(ciphertext string) {
 	respByte, err := ioutil.ReadFile("../pkey")
 	if err != nil {
 		fmt.Printf("%s", err)

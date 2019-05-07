@@ -1,5 +1,3 @@
-// crypto/rand.Reader is a good source of entropy for blinding the RSA
-// operation.
 package main
 
 import (
@@ -45,18 +43,3 @@ func main() {
 	return
 }
 
-    //use 
-    /*privateKeyFile, err := os.Create(privateKeyPath)
-    defer privateKeyFile.Close()
-    if err != nil {
-        return err
-    }*/
-    /*privateKeyPEM := &pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(privateKey)}
-    if err := pem.Encode(privateKeyFile, privateKeyPEM); err != nil {
-        return err
-    }*/
-   /* pub, err := ssh.NewPublicKey(&privateKey.PublicKey)
-    if err != nil {
-        return err
-    }
-*/
