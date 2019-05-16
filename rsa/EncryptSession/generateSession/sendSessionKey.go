@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-       var salt = []byte("gocows")
+       var label = []byte("sessionKey")
 
 func main() {
 
@@ -41,7 +41,7 @@ func main() {
 		rand.Reader,
 		rsaPublicKey.(*rsa.PublicKey),
 		sessionKey,
-		salt)
+		label)
 
 	if err != nil {
 		fmt.Printf("%s", err)
@@ -83,7 +83,7 @@ func confirmCorrectDecryption(ciphertext string) {
 		rand.Reader,
 		rsaPrivateKey,
 		[]byte(ciphertext),
-		salt)
+		label)
 	if err != nil {
 		fmt.Printf("%s", err)
 		return

@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	salt := []byte("gocows")
+	label := []byte("sessionKey")
 	privateKey, err := rsa.GenerateKey(rand.Reader, 1024)
 	if err != nil {
 		fmt.Printf("%s", err)
@@ -50,7 +50,7 @@ func main() {
 				rand.Reader,
 				privateKey,
 				[]byte(ciphertext),
-				salt)
+				label)
 
 			if err != nil {
 				fmt.Printf("%s", err)
