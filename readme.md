@@ -12,5 +12,5 @@ PGP golang package here: https://godoc.org/golang.org/x/crypto/openpgp
 
 Signal example is here: https://github.com/dosco/libsignal-protocol-go
 
-Thank you for coming
+Thank you for coming and if you have any questions email me at h@fuzzy-ideas.com. I'll try to get back to you as soon as I can
 
